@@ -22,12 +22,7 @@ public class SubjectAdapter extends ArrayAdapter<String> {
         super(context, layoutResourced,objects);
 
         mstring = objects;
-
-
-
     }
-
-
 
     @Override
     public int getCount(){
