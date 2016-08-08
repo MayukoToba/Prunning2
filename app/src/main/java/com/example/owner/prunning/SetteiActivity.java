@@ -72,4 +72,14 @@ public class SetteiActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void setting_date(View v){
+        Intent intent = new Intent(this,TestDateActivity.class);
+        startActivity(intent);
+    }
+
+    public void setting_time (View v){
+        Intent intent = new Intent(this,TuuthiTimeSettingActivity.class);
+        startActivity(intent);
+    }
+
 }

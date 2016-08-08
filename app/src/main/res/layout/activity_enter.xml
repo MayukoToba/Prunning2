@@ -106,8 +106,9 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:id="@+id/page_first_edit"/>/>
+                android:inputType="number"
+                android:id="@+id/page_first_edit"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,13 +116,48 @@
                 android:text="〜"
                 android:textSize="20dp"
                 android:gravity="center_horizontal"/>
+
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:id="@+id/page_second_edit"/>/>
+                android:inputType="number"
+                android:id="@+id/page_second_edit"/><![CDATA[
+            /LinearLayout>
+
+        ]]>
         </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="予定日"
+                    android:textSize="20dp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginRight="100dp"
+                    android:layout_marginLeft="20dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="選択"
+                    android:textSize="20dp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="2dp"
+                    android:onClick="calender" />
+
+
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -139,6 +175,14 @@
                     android:onClick="ok_enter"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/okbutton" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/enter_ok_textView"
+                    android:textSize="20dp"
+                    android:textColor="#ff0000"
+                    android:gravity="center_horizontal"/>
             </LinearLayout>
 
 

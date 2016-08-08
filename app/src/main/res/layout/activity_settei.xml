@@ -35,41 +35,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="教科"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_marginTop="60dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:onClick="setting_subject"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_horizontal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="内容"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:onClick="setting_naiyou"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_horizontal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="テスト日"
                 android:textSize="30dp"
                 android:textStyle="bold"
                 android:textColor="#000000"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:onClick="setting_date"

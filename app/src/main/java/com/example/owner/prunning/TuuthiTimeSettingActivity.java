@@ -11,8 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class SubjectSettingActivity extends AppCompatActivity {
-
+public class TuuthiTimeSettingActivity extends AppCompatActivity {
     private ArrayList<String> mPlanetTitles;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -22,7 +21,7 @@ public class SubjectSettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subject_setting);
+        setContentView(R.layout.activity_tuuthi_time_setting);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPlanetTitles = new ArrayList<String>();
@@ -39,13 +38,7 @@ public class SubjectSettingActivity extends AppCompatActivity {
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);
 
-
-        mToolbar.setTitle("ホーム");
-
-
-
         setSupportActionBar(mToolbar);
-
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
@@ -69,11 +62,9 @@ public class SubjectSettingActivity extends AppCompatActivity {
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
-
     public void setting(View v){
         Intent intent = new Intent(this,SetteiActivity.class);
         startActivity(intent);
     }
-
-
 }
+
