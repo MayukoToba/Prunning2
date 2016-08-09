@@ -32,13 +32,16 @@ public class DisplayActivity extends AppCompatActivity {
     TextView countDateText;
     TextView countTimeText;
     TextView display_textView;
-    ListView mlistView;
 
     SharedPreferences pref1,pref2;
 
 
     Calendar nCalendar, tCalendar;
     YoteiDB YoteiDB;
+
+    List<TaskCard> mTaskCard;
+    TaskAdapter mTaskAdapter;
+    ListView mlistView;
 
 
     int year;
@@ -62,6 +65,8 @@ public class DisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display);
 
         mlistView = (ListView) findViewById(R.id.todo_list);
+        mTaskCard = new ArrayList<TaskCard>();
+
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPlanetTitles = new ArrayList<String>();
@@ -190,12 +195,12 @@ public class DisplayActivity extends AppCompatActivity {
     void setYotei(){
         List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
         for (YoteiDB i : items) {
-           nowDate();
-            String nowDate=String.valueOf(nowYear)+"/"+String.valueOf(nowMonth)+"/"+String.valueOf(nowDay);
-            if(i.date.equals(nowDate)){
+            nowDate();
+            String nowDate = String.valueOf(nowYear) + "/" + String.valueOf(nowMonth) + "/" + String.valueOf(nowDay);
+            if (i.date.equals(nowDate)) {
 
-                
-
+                mTaskAdapter = new TaskAdapter(this, R.layout.display_card,mTaskCard);
+                mlistView.setAdapter(mTaskAdapter);
             }
 
         }
