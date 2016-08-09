@@ -12,12 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.activeandroid.query.Select;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class EnterActivity extends AppCompatActivity {
 
@@ -113,7 +109,7 @@ public class EnterActivity extends AppCompatActivity {
         //日付初期値設定
         Calendar calendar = Calendar.getInstance();
         yotei_year = calendar.get(Calendar.YEAR); // 年
-        yotei_monthOfYear = calendar.get(Calendar.MONTH)+1; // 月
+        yotei_monthOfYear = calendar.get(Calendar.MONTH); // 月
 //        monthOfYear += 1;
         yotei_dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH); // 日
         Log.d("a","" + yotei_monthOfYear);

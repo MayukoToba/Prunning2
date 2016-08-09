@@ -6,10 +6,10 @@ package com.example.owner.prunning;
 public class TaskCard {
     public String subject;
     public String naiyou;
-    public int start_page = 0;
-    public int finish_page = 0;
+    public String start_page;
+    public String finish_page;
 
-    public TaskCard(String subject,String naiyou,int start_page,int finish_page){
+    public TaskCard(String subject,String naiyou,String start_page,String finish_page){
         this.subject = subject;
         this.naiyou = naiyou;
         this.start_page = start_page;

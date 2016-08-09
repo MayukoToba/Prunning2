@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,9 +36,8 @@ public class DisplayActivity extends AppCompatActivity {
 
 
     Calendar nCalendar, tCalendar;
-    YoteiDB YoteiDB;
 
-    List<TaskCard> mTaskCard;
+    List<TaskCard> taskCardList;
     TaskAdapter mTaskAdapter;
     ListView mlistView;
 
@@ -65,7 +63,7 @@ public class DisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display);
 
         mlistView = (ListView) findViewById(R.id.todo_list);
-        mTaskCard = new ArrayList<TaskCard>();
+        taskCardList = new ArrayList<TaskCard>();
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -197,13 +195,15 @@ public class DisplayActivity extends AppCompatActivity {
         for (YoteiDB i : items) {
             nowDate();
             String nowDate = String.valueOf(nowYear) + "/" + String.valueOf(nowMonth) + "/" + String.valueOf(nowDay);
-            if (i.date.equals(nowDate)) {
-
-                mTaskAdapter = new TaskAdapter(this, R.layout.display_card,mTaskCard);
-                mlistView.setAdapter(mTaskAdapter);
+            if (i.date.equals(nowDate)){
+                TaskCard mTaskCard;
+                mTaskCard = new TaskCard(i.subject,i.naiyou,i.start_page,i.finish_page);
+                taskCardList.add(mTaskCard);
             }
-
         }
+
+        mTaskAdapter = new TaskAdapter(this, R.layout.display_card,taskCardList);
+        mlistView.setAdapter(mTaskAdapter);
     }
 
 }
