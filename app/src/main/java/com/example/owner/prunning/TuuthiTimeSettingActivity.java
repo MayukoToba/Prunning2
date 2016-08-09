@@ -66,5 +66,7 @@ public class TuuthiTimeSettingActivity extends AppCompatActivity {
         Intent intent = new Intent(this,SetteiActivity.class);
         startActivity(intent);
     }
+
+    
 }
 

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -188,6 +189,14 @@ public class DisplayActivity extends AppCompatActivity {
         }
 
         setYotei();
+        mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?>parent,View v,int position,long id){
+               taskCardList.remove(position);
+                mTaskAdapter.notifyDataSetChanged();
+
+            }
+        });
     }
 
     void setYotei(){
@@ -205,5 +214,6 @@ public class DisplayActivity extends AppCompatActivity {
         mTaskAdapter = new TaskAdapter(this, R.layout.display_card,taskCardList);
         mlistView.setAdapter(mTaskAdapter);
     }
+
 
 }
