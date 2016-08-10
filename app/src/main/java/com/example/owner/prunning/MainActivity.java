@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.activeandroid.query.Select;
@@ -36,12 +36,29 @@ public class MainActivity extends AppCompatActivity {
         for (YoteiDB i : items) {
             String subject;
             subject= i.subject;
-            mPlanetTitles.add(subject);
+            if(!mPlanetTitles.contains(i.subject)){
+                mPlanetTitles.add(subject);
+            }
 
         }
 
         SubjectAdapter arrayAdapter= new SubjectAdapter (this, R.layout.card,mPlanetTitles);
         mDrawerList.setAdapter(arrayAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?>parent,View v,int position,long id){
+                String subject;
+                subject = mPlanetTitles.get(position);
+                Intent intent =new Intent (getApplicationContext(),NaiyouListActivity.class);
+                intent.putExtra("科目",subject);
+                startActivity(intent);
+
+                //mTaskAdapter.notifyDataSetChanged();
+
+            }
+        });
+
 
 
         // Set the adapter for the list view

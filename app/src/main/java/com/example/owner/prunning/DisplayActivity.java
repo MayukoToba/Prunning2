@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.activeandroid.query.Select;
@@ -70,6 +69,11 @@ public class DisplayActivity extends AppCompatActivity {
 
         mDrawerList = (ListView) findViewById(R.id.listView);
 
+        /*List<YoteiDB> items1 = new Select().from(YoteiDB.class).execute();
+        for (YoteiDB i : items1) {
+            i.delete();
+        }*/
+
 
 
 
@@ -78,12 +82,29 @@ public class DisplayActivity extends AppCompatActivity {
         for (YoteiDB i : items) {
                 String subject;
                  subject= i.subject;
+            if(!mPlanetTitles.contains(i.subject)){
                 mPlanetTitles.add(subject);
+            }
+
 
         }
 
          SubjectAdapter arrayAdapter= new SubjectAdapter (this, R.layout.card,mPlanetTitles);
          mDrawerList.setAdapter(arrayAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?>parent,View v,int position,long id){
+                String subject;
+                subject = mPlanetTitles.get(position);
+                Intent intent =new Intent (getApplicationContext(),NaiyouListActivity.class);
+                intent.putExtra("科目",subject);
+                startActivity(intent);
+
+                //mTaskAdapter.notifyDataSetChanged();
+
+            }
+        });
 
 
 
@@ -138,7 +159,6 @@ public class DisplayActivity extends AppCompatActivity {
         nowYear = nCalendar.get(Calendar.YEAR); // 年
         nowMonth = nCalendar.get(Calendar.MONTH) + 1; // 月
         nowDay = nCalendar.get(Calendar.DAY_OF_MONTH); // 日
-        //dateText.setText(nowYear + "/" + nowMonth + "/" + nowDay);
         Log.d("test", nowYear + "/" + nowMonth + "/" + nowDay);
     }
 
@@ -146,7 +166,6 @@ public class DisplayActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
 
@@ -226,8 +245,6 @@ public class DisplayActivity extends AppCompatActivity {
                 TaskCard mTaskCard;
                 mTaskCard = new TaskCard(i.subject,i.naiyou,i.start_page,i.finish_page);
                 taskCardList.add(mTaskCard);
-
-                Log.d("taskdate",""+i.date);
             }
         }
 

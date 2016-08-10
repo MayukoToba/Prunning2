@@ -6,9 +6,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.activeandroid.query.Select;
@@ -16,23 +16,32 @@ import com.activeandroid.query.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SetteiActivity extends AppCompatActivity {
-
+public class NaiyouListActivity extends AppCompatActivity {
     private ArrayList<String> mPlanetTitles;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
 
+    ArrayList<NaiyouCard> mNaiyou;
+    NaiyouAdapter mNaiyouAdapter;
+    ListView NaiyouListView;
+
+    String naiyou_subject;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settei);
+        setContentView(R.layout.activity_naiyou_list);
+
+        Intent intent = getIntent();
+        naiyou_subject =intent.getStringExtra("科目");
+        Log.d("kamoku",""+naiyou_subject);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPlanetTitles = new ArrayList<String>();
-        mDrawerList = (ListView)findViewById(R.id.listView);
+        mDrawerList = (ListView) findViewById(R.id.listView);
+        NaiyouListView = (ListView)findViewById(R.id.listView2);
 
         List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
         for (YoteiDB i : items) {
@@ -63,13 +72,13 @@ public class SetteiActivity extends AppCompatActivity {
 
 
 
+        // Set the adapter for the list view
+
+
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);
-        mToolbar.setTitle("設定");
+
         setSupportActionBar(mToolbar);
-
-
-
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
@@ -85,28 +94,24 @@ public class SetteiActivity extends AppCompatActivity {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        setNaiyou();
+
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
+   void setNaiyou() {
+       List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
+       mNaiyou = new ArrayList<NaiyouCard>();
+       for (YoteiDB i : items) {
+           if (i.subject.equals(naiyou_subject)) {
+               NaiyouCard mNaiyouCard;
+               mNaiyouCard = new NaiyouCard(i.naiyou, i.start_page, i.finish_page);
+               mNaiyou.add(mNaiyouCard);
+           }
+       }
 
-    public void setting(View v){
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-    }
+       mNaiyouAdapter = new NaiyouAdapter(this, R.layout.naiyou_card, mNaiyou);
+       NaiyouListView.setAdapter(mNaiyouAdapter);
 
-    public void setting_date(View v){
-        Intent intent = new Intent(this,TestDateActivity.class);
-        startActivity(intent);
-    }
-
-    public void setting_time (View v){
-        Intent intent = new Intent(this,TuuthiTimeSettingActivity.class);
-        startActivity(intent);
-    }
-
+   }
 }

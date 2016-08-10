@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -67,12 +67,29 @@ public class EnterActivity extends AppCompatActivity {
         for (YoteiDB i : items) {
             String subject;
             subject= i.subject;
-            mPlanetTitles.add(subject);
+            if(!mPlanetTitles.contains(i.subject)){
+                mPlanetTitles.add(subject);
+            }
 
         }
 
         SubjectAdapter arrayAdapter= new SubjectAdapter (this, R.layout.card,mPlanetTitles);
         mDrawerList.setAdapter(arrayAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?>parent,View v,int position,long id){
+                String subject;
+                subject = mPlanetTitles.get(position);
+                Intent intent =new Intent (getApplicationContext(),NaiyouListActivity.class);
+                intent.putExtra("科目",subject);
+                startActivity(intent);
+
+                //mTaskAdapter.notifyDataSetChanged();
+
+            }
+        });
+
 
         page_first_edit = (EditText) findViewById(R.id.page_first_edit);
         page_second_edit = (EditText) findViewById(R.id.page_second_edit);
@@ -150,6 +167,10 @@ public class EnterActivity extends AppCompatActivity {
             saveYotei();
 
             enter_ok_textView.setText(null);
+            page_first_edit.setText("");
+            page_second_edit.setText("");
+            subject_edit.setText("");
+            naiyou_edit.setText("");
 
             Intent intent =new Intent (getApplicationContext(),DisplayActivity.class);
             startActivity(intent);
@@ -164,7 +185,7 @@ public class EnterActivity extends AppCompatActivity {
         mYoteiDB.finish_page = page_second_edit.getText().toString();
         mYoteiDB.subject = subject_edit.getText().toString();
         mYoteiDB.naiyou =naiyou_edit.getText().toString() ;
-        String date = String.valueOf(yotei_year)+"/"+String.valueOf(yotei_monthOfYear)+"/"+String.valueOf(yotei_dayOfMonth);
+        String date = String.valueOf(yotei_year)+"/"+String.valueOf(yotei_monthOfYear+1)+"/"+String.valueOf(yotei_dayOfMonth);
         mYoteiDB.date =date;
         mYoteiDB.save();
     }

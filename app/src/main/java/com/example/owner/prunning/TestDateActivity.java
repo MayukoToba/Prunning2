@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -71,14 +72,31 @@ public class TestDateActivity extends AppCompatActivity {
 
         List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
         for (YoteiDB i : items) {
-            String subject=null;
+            String subject;
             subject= i.subject;
-            mPlanetTitles.add(subject);
+            if(!mPlanetTitles.contains(i.subject)){
+                mPlanetTitles.add(subject);
+            }
 
         }
 
         SubjectAdapter arrayAdapter= new SubjectAdapter (this, R.layout.card,mPlanetTitles);
         mDrawerList.setAdapter(arrayAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?>parent,View v,int position,long id){
+                String subject;
+                subject = mPlanetTitles.get(position);
+                Intent intent =new Intent (getApplicationContext(),NaiyouListActivity.class);
+                intent.putExtra("科目",subject);
+                startActivity(intent);
+
+                //mTaskAdapter.notifyDataSetChanged();
+
+            }
+        });
+
 
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);
