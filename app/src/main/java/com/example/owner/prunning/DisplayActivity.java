@@ -11,11 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.activeandroid.query.Select;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,7 +33,6 @@ public class DisplayActivity extends AppCompatActivity {
     TextView display_textView;
 
     SharedPreferences pref1,pref2;
-
 
     Calendar nCalendar, tCalendar;
 
@@ -70,8 +68,28 @@ public class DisplayActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPlanetTitles = new ArrayList<String>();
 
-        mPlanetTitles.add("数学");
         mDrawerList = (ListView) findViewById(R.id.listView);
+
+
+
+
+
+        List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
+        for (YoteiDB i : items) {
+                String subject;
+                 subject= i.subject;
+                mPlanetTitles.add(subject);
+
+        }
+
+         SubjectAdapter arrayAdapter= new SubjectAdapter (this, R.layout.card,mPlanetTitles);
+         mDrawerList.setAdapter(arrayAdapter);
+
+
+
+
+
+
 
         pref1 = getSharedPreferences("pref_test", MODE_PRIVATE);
         pref2 = getSharedPreferences("pref_card", MODE_PRIVATE);
@@ -208,11 +226,15 @@ public class DisplayActivity extends AppCompatActivity {
                 TaskCard mTaskCard;
                 mTaskCard = new TaskCard(i.subject,i.naiyou,i.start_page,i.finish_page);
                 taskCardList.add(mTaskCard);
+
+                Log.d("taskdate",""+i.date);
             }
         }
 
         mTaskAdapter = new TaskAdapter(this, R.layout.display_card,taskCardList);
         mlistView.setAdapter(mTaskAdapter);
+
+
     }
 
 

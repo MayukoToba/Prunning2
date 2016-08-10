@@ -7,9 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.activeandroid.query.Select;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class SetteiActivity extends AppCompatActivity {
 
@@ -19,6 +23,7 @@ public class SetteiActivity extends AppCompatActivity {
     ActionBarDrawerToggle mDrawerToggle;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,15 +31,19 @@ public class SetteiActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPlanetTitles = new ArrayList<String>();
+        mDrawerList = (ListView)findViewById(R.id.listView);
 
-        mPlanetTitles.add("数学");
-        mDrawerList = (ListView) findViewById(R.id.listView);
+        List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
+        for (YoteiDB i : items) {
+            String subject;
+            subject= i.subject;
+            mPlanetTitles.add(subject);
 
-        SubjectAdapter subjectAdapter = new SubjectAdapter(this,
-                R.layout.card, mPlanetTitles);
+        }
 
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(subjectAdapter);
+        SubjectAdapter arrayAdapter= new SubjectAdapter (this, R.layout.card,mPlanetTitles);
+        mDrawerList.setAdapter(arrayAdapter);
+
 
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);

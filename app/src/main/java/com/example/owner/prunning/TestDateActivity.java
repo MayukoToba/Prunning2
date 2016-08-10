@@ -10,12 +10,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 
+import com.activeandroid.query.Select;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class TestDateActivity extends AppCompatActivity {
 
@@ -62,18 +66,19 @@ public class TestDateActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPlanetTitles = new ArrayList<String>();
-
-        mPlanetTitles.add("数学");
-        mDrawerList = (ListView) findViewById(R.id.listView);
-
+        mDrawerList = (ListView)findViewById(R.id.listView);
         pref = getSharedPreferences("pref_test", MODE_PRIVATE);
 
+        List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
+        for (YoteiDB i : items) {
+            String subject=null;
+            subject= i.subject;
+            mPlanetTitles.add(subject);
 
-        SubjectAdapter subjectAdapter = new SubjectAdapter(this,
-                R.layout.card, mPlanetTitles);
+        }
 
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(subjectAdapter);
+        SubjectAdapter arrayAdapter= new SubjectAdapter (this, R.layout.card,mPlanetTitles);
+        mDrawerList.setAdapter(arrayAdapter);
 
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);
