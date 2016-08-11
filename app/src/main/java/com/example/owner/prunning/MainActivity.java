@@ -1,8 +1,10 @@
 package com.example.owner.prunning;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle mDrawerToggle;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPlanetTitles = new ArrayList<String>();
         mDrawerList = (ListView) findViewById(R.id.listView);
@@ -35,23 +38,23 @@ public class MainActivity extends AppCompatActivity {
         List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
         for (YoteiDB i : items) {
             String subject;
-            subject= i.subject;
-            if(!mPlanetTitles.contains(i.subject)){
+            subject = i.subject;
+            if (!mPlanetTitles.contains(i.subject)) {
                 mPlanetTitles.add(subject);
             }
 
         }
 
-        SubjectAdapter arrayAdapter= new SubjectAdapter (this, R.layout.card,mPlanetTitles);
+        SubjectAdapter arrayAdapter = new SubjectAdapter(this, R.layout.card, mPlanetTitles);
         mDrawerList.setAdapter(arrayAdapter);
 
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?>parent,View v,int position,long id){
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 String subject;
                 subject = mPlanetTitles.get(position);
-                Intent intent =new Intent (getApplicationContext(),NaiyouListActivity.class);
-                intent.putExtra("科目",subject);
+                Intent intent = new Intent(getApplicationContext(), NaiyouListActivity.class);
+                intent.putExtra("科目", subject);
                 startActivity(intent);
 
                 //mTaskAdapter.notifyDataSetChanged();
@@ -60,9 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         // Set the adapter for the list view
-
 
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -88,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
 //        for (YoteiDB i : items1) {
 //            i.delete();
 //        }
+
+
     }
-
-
 
 
     @Override
@@ -98,17 +99,20 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
-    public void setting(View v){
-        Intent intent = new Intent(this,SetteiActivity.class);
+
+    public void setting(View v) {
+        Intent intent = new Intent(this, SetteiActivity.class);
         startActivity(intent);
     }
-    public void nyuuryoku(View v){
-        Intent intent= new Intent(this,EnterActivity.class);
+
+    public void nyuuryoku(View v) {
+        Intent intent = new Intent(this, EnterActivity.class);
         startActivity(intent);
 
     }
-    public void hyouzi(View v){
-        Intent intent= new Intent(this,DisplayActivity.class);
+
+    public void hyouzi(View v) {
+        Intent intent = new Intent(this, DisplayActivity.class);
         startActivity(intent);
     }
 

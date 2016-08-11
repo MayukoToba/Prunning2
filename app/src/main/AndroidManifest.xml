@@ -26,8 +26,6 @@
         <activity android:name=".EnterActivity" />
         <activity android:name=".DisplayActivity" />
         <activity android:name=".SetteiActivity" />
-        <activity android:name=".SubjectSettingActivity" />
-        <activity android:name=".NaiyouSettingActivity" />
         <activity android:name=".TestDateActivity" />
         <activity android:name=".TuuthiTimeSettingActivity" />
         <activity android:name=".NaiyouListActivity"></activity>

@@ -46,6 +46,20 @@ public class EnterActivity extends AppCompatActivity {
             yotei_monthOfYear = getMonthOfYear;
             yotei_dayOfMonth = getDayOfMonth;
 
+            int monthOfYar=yotei_monthOfYear+1;
+            if (monthOfYar<=9){
+                yotei_month="0" +String.valueOf(monthOfYar);
+            }else{
+                yotei_month=String.valueOf(monthOfYar);
+            }
+            if (yotei_dayOfMonth<=9){
+                yotei_date="0" +String.valueOf(yotei_dayOfMonth);
+            }else{
+                yotei_date=String.valueOf(yotei_dayOfMonth);
+            }
+            Log.d("yotei_month",""+yotei_month);
+
+
 
         }
     };
@@ -137,23 +151,13 @@ public class EnterActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         yotei_year = calendar.get(Calendar.YEAR); // 年
         yotei_monthOfYear = calendar.get(Calendar.MONTH) ;// 月
-        int monthOfYar=yotei_monthOfYear+1;
-        if (monthOfYar<=9){
-            yotei_month="0" +String.valueOf(monthOfYar);
-        }else{
-            yotei_month=String.valueOf(monthOfYar);
-        }
+
 
         yotei_dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);// 日
-        if (yotei_dayOfMonth<=9){
-            yotei_date="0" +String.valueOf(yotei_dayOfMonth);
-        }else{
-            yotei_date=String.valueOf(yotei_dayOfMonth);
-        }
-        Log.d("yotei_month",""+yotei_month);
 
         // 日付設定ダイアログの作成・リスナの登録
         datePickerDialog = new DatePickerDialog(this, DateSetListener, yotei_year, yotei_monthOfYear, yotei_dayOfMonth);
+
 
         datePickerDialog.show();
 
