@@ -222,10 +222,10 @@ public class DisplayActivity extends AppCompatActivity {
                                 taskCardList.get(position).mColor=("#0000FF");
                                 mTaskAdapter.notifyDataSetChanged();
 
-                                String subject = taskCardList.get(position).subject;
-                                String naiyou = taskCardList.get(position).naiyou;
-                                String start_page = taskCardList.get(position).start_page;
-                                String finish_page = taskCardList.get(position).finish_page;
+//                                String subject = taskCardList.get(position).subject;
+//                                String naiyou = taskCardList.get(position).naiyou;
+//                                String start_page = taskCardList.get(position).start_page;
+//                                String finish_page = taskCardList.get(position).finish_page;
 
                                 //ここに処理を書く
 
@@ -282,7 +282,7 @@ public class DisplayActivity extends AppCompatActivity {
         for (YoteiDB i : items) {
             nowDate();
 
-            //String nowDate = String.valueOf(nowYear) + "/" + String.valueOf(nowMonth) + "/" + String.valueOf(nowDay);
+           // String nowDate = String.valueOf(nowYear) + "/" + String.valueOf(nowMonth) + "/" + String.valueOf(nowDay);
             int naiyou_year = Integer.parseInt(i.date.substring(0, 4));
             int naiyou_month = Integer.parseInt(i.date.substring(5, 7));
             int naiyou_date = Integer.parseInt(i.date.substring(8, 10));
@@ -307,6 +307,8 @@ public class DisplayActivity extends AppCompatActivity {
                 taskCardList.add(mTaskCard);
 
             }
+
+
         }
 
         mTaskAdapter = new TaskAdapter(this, R.layout.display_card, taskCardList);
