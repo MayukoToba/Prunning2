@@ -30,6 +30,7 @@ public class EnterActivity extends AppCompatActivity {
     EditText subject_edit, naiyou_edit, page_first_edit, page_second_edit;
 
     int yotei_year,yotei_monthOfYear,yotei_dayOfMonth;
+    String yotei_month,yotei_date;
     TextView enter_ok_textView;
 
     YoteiDB mYoteiDB;
@@ -44,9 +45,7 @@ public class EnterActivity extends AppCompatActivity {
             yotei_year = getYear;
             yotei_monthOfYear = getMonthOfYear;
             yotei_dayOfMonth = getDayOfMonth;
-            //ログ出力
-            Log.d("DatePicker", "year:" + yotei_year + " monthOfYear:" + yotei_monthOfYear
-                    + " dayOfMonth:" + yotei_dayOfMonth);
+
 
         }
     };
@@ -137,10 +136,21 @@ public class EnterActivity extends AppCompatActivity {
         //日付初期値設定
         Calendar calendar = Calendar.getInstance();
         yotei_year = calendar.get(Calendar.YEAR); // 年
-        yotei_monthOfYear = calendar.get(Calendar.MONTH); // 月
-//        monthOfYear += 1;
-        yotei_dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH); // 日
-        Log.d("a","" + yotei_monthOfYear);
+        yotei_monthOfYear = calendar.get(Calendar.MONTH) ;// 月
+        int monthOfYar=yotei_monthOfYear+1;
+        if (monthOfYar<=9){
+            yotei_month="0" +String.valueOf(monthOfYar);
+        }else{
+            yotei_month=String.valueOf(monthOfYar);
+        }
+
+        yotei_dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);// 日
+        if (yotei_dayOfMonth<=9){
+            yotei_date="0" +String.valueOf(yotei_dayOfMonth);
+        }else{
+            yotei_date=String.valueOf(yotei_dayOfMonth);
+        }
+        Log.d("yotei_month",""+yotei_month);
 
         // 日付設定ダイアログの作成・リスナの登録
         datePickerDialog = new DatePickerDialog(this, DateSetListener, yotei_year, yotei_monthOfYear, yotei_dayOfMonth);
@@ -185,7 +195,8 @@ public class EnterActivity extends AppCompatActivity {
         mYoteiDB.finish_page = page_second_edit.getText().toString();
         mYoteiDB.subject = subject_edit.getText().toString();
         mYoteiDB.naiyou =naiyou_edit.getText().toString() ;
-        String date = String.valueOf(yotei_year)+"/"+String.valueOf(yotei_monthOfYear+1)+"/"+String.valueOf(yotei_dayOfMonth);
+        String date = String.valueOf(yotei_year)+"/"+yotei_month+"/"+yotei_date;
+        Log.d("naiyou_year",""+date);
         mYoteiDB.date =date;
         mYoteiDB.save();
     }

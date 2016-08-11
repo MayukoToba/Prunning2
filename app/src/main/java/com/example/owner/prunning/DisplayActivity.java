@@ -1,10 +1,13 @@
 package com.example.owner.prunning;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ParseException;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -69,10 +72,10 @@ public class DisplayActivity extends AppCompatActivity {
 
         mDrawerList = (ListView) findViewById(R.id.listView);
 
-        /*List<YoteiDB> items1 = new Select().from(YoteiDB.class).execute();
-        for (YoteiDB i : items1) {
-            i.delete();
-        }*/
+//        List<YoteiDB> items1 = new Select().from(YoteiDB.class).execute();
+//        for (YoteiDB i : items1) {
+//            i.delete();
+//        }
 
 
 
@@ -153,31 +156,17 @@ public class DisplayActivity extends AppCompatActivity {
         display_textView = (TextView) findViewById(R.id.display_textView);
 
         nowDate();
+        show();
     }
     void nowDate() {
         nCalendar = Calendar.getInstance();
         nowYear = nCalendar.get(Calendar.YEAR); // 年
         nowMonth = nCalendar.get(Calendar.MONTH) + 1; // 月
         nowDay = nCalendar.get(Calendar.DAY_OF_MONTH); // 日
-        Log.d("test", nowYear + "/" + nowMonth + "/" + nowDay);
+//        Log.d("test", nowYear + "/" + nowMonth + "/" + nowDay);
     }
 
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    public void setting(View v) {
-        Intent intent = new Intent(this, SetteiActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+    void show(){
         String title = pref1.getString("title","テスト頑張ってね");
         year = pref1.getInt("year", 0);
         monthOfYear = pref1.getInt("month", 0) + 1;
@@ -202,11 +191,11 @@ public class DisplayActivity extends AppCompatActivity {
             try {
                 utilStartDate = sdf.parse(nowYear + "/" + nowMonth + "/" + nowDay);
                 sqlStartDate = new java.sql.Date(utilStartDate.getTime());
-                Log.d("start", sqlStartDate + "");
+//                Log.d("start", sqlStartDate + "");
 
                 utilToDate = sdf.parse(year + "/" + monthOfYear + "/" + dayOfMonth);
                 sqlToDate = new java.sql.Date(utilToDate.getTime());
-                Log.d("to", sqlToDate + "");
+//                Log.d("to", sqlToDate + "");
             } catch (ParseException e) {
                 e.printStackTrace();
             } catch (java.text.ParseException e) {
@@ -227,30 +216,85 @@ public class DisplayActivity extends AppCompatActivity {
 
         setYotei();
         mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?>parent,View v,int position,long id){
-               taskCardList.remove(position);
-                mTaskAdapter.notifyDataSetChanged();
+//            @Override
+//            public void onItemClick(AdapterView<?>parent,View v,int position,long id){
+//                // 確認ダイアログの生成
+//                AlertDialog.Builder alertDlg = new AlertDialog.Builder(this);
+//                alertDlg.setTitle("終了？？");
+//                alertDlg.setMessage("終わりましたか？");
+//                alertDlg.setPositiveButton(
+//                        "OK",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                // OK ボタンクリック処理
+//
+//
+//
+//                            }
+//                        });
+//
+//                // 表示
+//                alertDlg.create().show();
+//            }
+//               taskCardList.remove(position);
+//                mTaskAdapter.notifyDataSetChanged();
 
-            }
         });
     }
 
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    public void setting(View v) {
+        Intent intent = new Intent(this, SetteiActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
     void setYotei(){
+
+
+
         List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
         for (YoteiDB i : items) {
             nowDate();
-            String nowDate = String.valueOf(nowYear) + "/" + String.valueOf(nowMonth) + "/" + String.valueOf(nowDay);
-            if (i.date.equals(nowDate)){
+
+            //String nowDate = String.valueOf(nowYear) + "/" + String.valueOf(nowMonth) + "/" + String.valueOf(nowDay);
+            int naiyou_year= Integer.parseInt(i.date.substring(0,4));
+            int naiyou_month= Integer.parseInt(i.date.substring(5,7));
+            int naiyou_date= Integer.parseInt(i.date.substring(8,10));
+
+            Log.d("naiyou_year",""+naiyou_year);
+            Log.d("naiyou_month",""+naiyou_month);
+            Log.d("naiyou_date",""+naiyou_date);
+
+
+
+            if (naiyou_year<nowYear&&naiyou_month<nowMonth&&naiyou_date<nowDay){
                 TaskCard mTaskCard;
-                mTaskCard = new TaskCard(i.subject,i.naiyou,i.start_page,i.finish_page);
+                mTaskCard = new TaskCard(i.subject,i.naiyou,i.start_page,i.finish_page,"#FF0000");
                 taskCardList.add(mTaskCard);
+
+            }else{
+                TaskCard mTaskCard;
+                mTaskCard = new TaskCard(i.subject,i.naiyou,i.start_page,i.finish_page,"#000000");
+                taskCardList.add(mTaskCard);
+
             }
         }
 
         mTaskAdapter = new TaskAdapter(this, R.layout.display_card,taskCardList);
         mlistView.setAdapter(mTaskAdapter);
-
 
     }
 

@@ -1,6 +1,7 @@
 package com.example.owner.prunning;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 
 import com.activeandroid.annotation.Column;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by owner on 2016/08/08.
@@ -17,7 +20,7 @@ import java.util.List;
 public class TaskAdapter extends ArrayAdapter<TaskCard> {
     List<TaskCard> mTaskCard;
 
-    public TaskAdapter(Context context,int layoutResourceId,List<TaskCard>objects){
+    public TaskAdapter(Context context,int layoutResourceId,List<TaskCard> objects){
         super(context,layoutResourceId,objects);
 
         mTaskCard = objects;
@@ -49,11 +52,14 @@ public class TaskAdapter extends ArrayAdapter<TaskCard> {
         if (item != null){
             //set data
             viewHolder.subjectTextView.setText(item.subject);
+            viewHolder.subjectTextView.setTextColor(Color.parseColor(item.mColor));
             viewHolder.naiyouTextView.setText(item.naiyou);
             viewHolder.startpageTextView.setText(item.start_page);
             viewHolder.finishpageTextView.setText(item.finish_page);
 
         }
+
+
 
         return convertView;
     }
@@ -72,4 +78,5 @@ public class TaskAdapter extends ArrayAdapter<TaskCard> {
         }
 
     }
+
 }
