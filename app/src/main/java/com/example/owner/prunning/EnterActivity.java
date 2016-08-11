@@ -199,6 +199,7 @@ public class EnterActivity extends AppCompatActivity {
         mYoteiDB.finish_page = page_second_edit.getText().toString();
         mYoteiDB.subject = subject_edit.getText().toString();
         mYoteiDB.naiyou =naiyou_edit.getText().toString() ;
+        //mYoteiDB.end = "nonend";
         String date = String.valueOf(yotei_year)+"/"+yotei_month+"/"+yotei_date;
         Log.d("naiyou_year",""+date);
         mYoteiDB.date =date;

@@ -33,6 +33,9 @@ public class YoteiDB extends Model {
     @Column(name = "date")
     public String date;
 
+//    @Column(name="end")
+//    public String end;
+
     @Override
     public String toString(){
         return subject;

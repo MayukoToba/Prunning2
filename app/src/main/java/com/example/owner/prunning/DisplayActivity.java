@@ -39,6 +39,8 @@ public class DisplayActivity extends AppCompatActivity {
 
     Calendar nCalendar, tCalendar;
 
+    YoteiDB mYoteiBD;
+
     List<TaskCard> taskCardList;
     TaskAdapter mTaskAdapter;
     ListView mlistView;
@@ -220,6 +222,28 @@ public class DisplayActivity extends AppCompatActivity {
                                 taskCardList.get(position).mColor=("#0000FF");
                                 mTaskAdapter.notifyDataSetChanged();
 
+                                String subject = taskCardList.get(position).subject;
+                                String naiyou = taskCardList.get(position).naiyou;
+                                String start_page = taskCardList.get(position).start_page;
+                                String finish_page = taskCardList.get(position).finish_page;
+
+                                //ここに処理を書く
+
+//                                List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
+//                                for (YoteiDB i : items) {
+//                                    nowDate();
+//
+//                                    if(i.subject.equals(subject)&&i.naiyou.equals(naiyou)&&i.start_page.equals(start_page)&&i.finish_page.equals(finish_page)){
+//                                        i.end = "end";
+//                                        i.save();
+//
+//                                    }
+//
+//
+//
+//                                }
+
+
 
                             }
                         })
@@ -267,11 +291,10 @@ public class DisplayActivity extends AppCompatActivity {
             Log.d("naiyou_month", "" + naiyou_month);
             Log.d("naiyou_date", "" + naiyou_date);
 
-
-//            if (naiyou_year < nowYear && naiyou_month < nowMonth && naiyou_date < nowDay) {
+//            if(naiyou_year < nowYear && naiyou_month < nowMonth && naiyou_date < nowDay&&i.end.equals("end")) {
 //                i.delete();
+//
 //            }
-
 
             if (naiyou_year < nowYear && naiyou_month < nowMonth && naiyou_date < nowDay) {
                 TaskCard mTaskCard;

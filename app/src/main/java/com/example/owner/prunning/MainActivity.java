@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-//        List<YoteiDB> items1 = new Select().from(YoteiDB.class).execute();
-//        for (YoteiDB i : items1) {
-//            i.delete();
-//        }
+        List<YoteiDB> items1 = new Select().from(YoteiDB.class).execute();
+        for (YoteiDB i : items1) {
+            i.delete();
+        }
 
 
     }
