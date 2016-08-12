@@ -70,6 +70,8 @@ public class DisplayActivity extends AppCompatActivity {
 
 
 
+
+
         mlistView = (ListView) findViewById(R.id.todo_list);
         taskCardList = new ArrayList<TaskCard>();
 
@@ -78,6 +80,22 @@ public class DisplayActivity extends AppCompatActivity {
         mPlanetTitles = new ArrayList<String>();
 
         mDrawerList = (ListView) findViewById(R.id.listView);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -222,26 +240,27 @@ public class DisplayActivity extends AppCompatActivity {
                                 taskCardList.get(position).mColor=("#0000FF");
                                 mTaskAdapter.notifyDataSetChanged();
 
-//                                String subject = taskCardList.get(position).subject;
-//                                String naiyou = taskCardList.get(position).naiyou;
-//                                String start_page = taskCardList.get(position).start_page;
-//                                String finish_page = taskCardList.get(position).finish_page;
+                                String subject = taskCardList.get(position).subject;
+                                String naiyou = taskCardList.get(position).naiyou;
+                                String start_page = taskCardList.get(position).start_page;
+                                String finish_page = taskCardList.get(position).finish_page;
 
                                 //ここに処理を書く
 
-//                                List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
-//                                for (YoteiDB i : items) {
-//                                    nowDate();
-//
-//                                    if(i.subject.equals(subject)&&i.naiyou.equals(naiyou)&&i.start_page.equals(start_page)&&i.finish_page.equals(finish_page)){
-//                                        i.end = "end";
-//                                        i.save();
-//
-//                                    }
-//
-//
-//
-//                                }
+                                List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
+                                for (YoteiDB i : items) {
+                                    nowDate();
+
+                                    if(i.subject.equals(subject)&&i.naiyou.equals(naiyou)&&i.start_page.equals(start_page)&&i.finish_page.equals(finish_page)){
+                                        i.end = "end";
+                                        i.save();
+                                        Log.d("end",""+i.end);
+
+                                    }
+
+
+
+                                }
 
 
 
@@ -287,25 +306,35 @@ public class DisplayActivity extends AppCompatActivity {
             int naiyou_month = Integer.parseInt(i.date.substring(5, 7));
             int naiyou_date = Integer.parseInt(i.date.substring(8, 10));
 
-            Log.d("naiyou_year", "" + naiyou_year);
-            Log.d("naiyou_month", "" + naiyou_month);
-            Log.d("naiyou_date", "" + naiyou_date);
-
-//            if(naiyou_year < nowYear && naiyou_month < nowMonth && naiyou_date < nowDay&&i.end.equals("end")) {
-//                i.delete();
+//            Log.d("nowYear",""+nowYear);
+//            Log.d("nowMonth",""+nowMonth);
+//            Log.d("nowDay",""+nowDay);
 //
-//            }
+//            Log.d("naiyou_year", "" + naiyou_year);
+//            Log.d("naiyou_month", "" + naiyou_month);
+//            Log.d("naiyou_date", "" + naiyou_date);
 
-            if (naiyou_year < nowYear && naiyou_month < nowMonth && naiyou_date < nowDay) {
-                TaskCard mTaskCard;
-                mTaskCard = new TaskCard(i.subject, i.naiyou, i.start_page, i.finish_page, "#FF0000");
-                taskCardList.add(mTaskCard);
+            if(naiyou_year < nowYear || naiyou_month < nowMonth || naiyou_date < nowDay) {
+                if(i.end.equals("end")){
+                    Log.d("if end",""+i.subject);
+                    i.delete();
+                }else if (i.end.equals("nonend")){
+                    Log.d("if",""+i.subject);
+                    TaskCard mTaskCard;
+                    mTaskCard = new TaskCard(i.subject, i.naiyou, i.start_page, i.finish_page, "#FF0000");
+                    taskCardList.add(mTaskCard);
 
-            } else if(naiyou_year==nowYear&&naiyou_month==nowMonth&&naiyou_date==nowDay){
+                }else{
+                    Log.d("end else",""+i.subject);
+                }
+            } else if(naiyou_year==nowYear&&naiyou_month==nowMonth&&naiyou_date==nowDay&&i.end.equals("nonend")){
+                Log.d("else if",""+i.subject);
                 TaskCard mTaskCard;
                 mTaskCard = new TaskCard(i.subject, i.naiyou, i.start_page, i.finish_page, "#000000");
                 taskCardList.add(mTaskCard);
 
+            }else{
+                Log.d("else",""+i.subject);
             }
 
 

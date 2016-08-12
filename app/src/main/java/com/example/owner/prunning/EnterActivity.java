@@ -186,6 +186,28 @@ public class EnterActivity extends AppCompatActivity {
             subject_edit.setText("");
             naiyou_edit.setText("");
 
+
+
+
+
+            List<YoteiDB> items2 = new Select().from(YoteiDB.class).execute();
+            for (YoteiDB i : items2) {
+
+                Log.d("oncreate subjet",""+i.subject);
+                Log.d("oncreate naiyou",""+i.naiyou);
+                Log.d("oncreate start_page",""+i.start_page);
+                Log.d("oncreate finish_page",""+i.finish_page);
+
+
+
+            }
+
+
+
+
+
+
+
             Intent intent =new Intent (getApplicationContext(),DisplayActivity.class);
             startActivity(intent);
 
@@ -194,14 +216,17 @@ public class EnterActivity extends AppCompatActivity {
 
     }
 
+
+
     void saveYotei(){
         mYoteiDB.start_page = page_first_edit.getText().toString();
         mYoteiDB.finish_page = page_second_edit.getText().toString();
         mYoteiDB.subject = subject_edit.getText().toString();
         mYoteiDB.naiyou =naiyou_edit.getText().toString() ;
-        //mYoteiDB.end = "nonend";
+        mYoteiDB.end = "nonend";
         String date = String.valueOf(yotei_year)+"/"+yotei_month+"/"+yotei_date;
         Log.d("naiyou_year",""+date);
+        Log.d("end",""+mYoteiDB.end);
         mYoteiDB.date =date;
         mYoteiDB.save();
     }
