@@ -1,4 +1,4 @@
-package com.example.owner.prunning;
+package com.prunning.owner.prunning;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -152,7 +151,10 @@ public class TestDateActivity extends AppCompatActivity {
         editor.putInt("year", year);
         editor.putInt("month", monthOfYear);
         editor.putInt("day", dayOfMonth);
+        editor.putBoolean("isFirst",false);
         editor.commit();
+
+
 
 
         Intent intent = new Intent(this, DisplayActivity.class);

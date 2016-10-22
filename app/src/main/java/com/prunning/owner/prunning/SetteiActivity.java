@@ -1,4 +1,4 @@
-package com.example.owner.prunning;
+package com.prunning.owner.prunning;
 
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
@@ -8,26 +8,26 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.activeandroid.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListResourceBundle;
 
-public class TuuthiTimeSettingActivity extends AppCompatActivity {
+public class SetteiActivity extends AppCompatActivity {
+
     private ArrayList<String> mPlanetTitles;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tuuthi_time_setting);
+        setContentView(R.layout.activity_settei);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPlanetTitles = new ArrayList<String>();
@@ -62,9 +62,13 @@ public class TuuthiTimeSettingActivity extends AppCompatActivity {
 
 
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        mToolbar.setTitle("設定");
         setSupportActionBar(mToolbar);
+
+
+
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
@@ -88,11 +92,20 @@ public class TuuthiTimeSettingActivity extends AppCompatActivity {
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
+
     public void setting(View v){
-        Intent intent = new Intent(this,SetteiActivity.class);
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 
-    
-}
+    public void setting_date(View v){
+        Intent intent = new Intent(this,TestDateActivity.class);
+        startActivity(intent);
+    }
 
+    public void setting_time (View v){
+        Intent intent = new Intent(this,TuuthiTimeSettingActivity.class);
+        startActivity(intent);
+    }
+
+}

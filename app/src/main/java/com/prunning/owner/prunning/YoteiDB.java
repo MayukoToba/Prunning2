@@ -1,6 +1,4 @@
-package com.example.owner.prunning;
-
-import android.content.Intent;
+package com.prunning.owner.prunning;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -35,6 +33,9 @@ public class YoteiDB extends Model {
 
     @Column(name="end")
     public String end;
+
+    @Column(name="tag")
+    public String tag;
 
     @Override
     public String toString(){

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.owner.prunning">
+    package="com.prunning.owner.prunning">
 
     <application
         android:name="com.activeandroid.app.Application"
@@ -16,19 +16,22 @@
             android:name="AA_DB_VERSION"
             android:value="1" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.prunning.owner.prunning.MainActivity">
+
+        </activity>
+        <activity android:name="com.prunning.owner.prunning.EnterActivity" />
+        <activity android:name="com.prunning.owner.prunning.DisplayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EnterActivity" />
-        <activity android:name=".DisplayActivity" />
-        <activity android:name=".SetteiActivity" />
-        <activity android:name=".TestDateActivity" />
-        <activity android:name=".TuuthiTimeSettingActivity" />
-        <activity android:name=".NaiyouListActivity"></activity>
+        >
+        <activity android:name="com.prunning.owner.prunning.SetteiActivity" />
+        <activity android:name="com.prunning.owner.prunning.TestDateActivity" />
+        <activity android:name="com.prunning.owner.prunning.TuuthiTimeSettingActivity" />
+        <activity android:name="com.prunning.owner.prunning.NaiyouListActivity"></activity>
     </application>
 
 </manifest>

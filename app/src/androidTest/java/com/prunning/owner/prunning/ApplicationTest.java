@@ -1,4 +1,4 @@
-package com.example.owner.prunning;
+package com.prunning.owner.prunning;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

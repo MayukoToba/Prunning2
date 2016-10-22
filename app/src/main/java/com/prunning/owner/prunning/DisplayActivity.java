@@ -1,5 +1,6 @@
-package com.example.owner.prunning;
+package com.prunning.owner.prunning;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -60,6 +61,7 @@ public class DisplayActivity extends AppCompatActivity {
     java.util.Date utilToDate;
     java.sql.Date sqlToDate;
 
+    boolean isFirst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +69,8 @@ public class DisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display);
 
 
-
-
-
+        SharedPreferences data = getSharedPreferences("pref_test", Context.MODE_PRIVATE);
+        isFirst = data.getBoolean("isFirst", true);
 
 
         mlistView = (ListView) findViewById(R.id.todo_list);
@@ -80,24 +81,6 @@ public class DisplayActivity extends AppCompatActivity {
         mPlanetTitles = new ArrayList<String>();
 
         mDrawerList = (ListView) findViewById(R.id.listView);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
@@ -168,6 +151,19 @@ public class DisplayActivity extends AppCompatActivity {
 
         nowDate();
         show();
+
+        /*List<YoteiDB> items1 = new Select().from(YoteiDB.class).execute();
+        for (YoteiDB i : items1) {
+            i.delete();
+        }*/
+
+        if (isFirst) {
+
+            Intent intet = new Intent(this, TestDateActivity.class);
+            startActivity(intet);
+        }
+
+
     }
 
     void nowDate() {
@@ -185,7 +181,8 @@ public class DisplayActivity extends AppCompatActivity {
 
 
         //初期状態だった時現在日時を表示する
-        if (year == 0 && monthOfYear == 0 && dayOfMonth == 0) {
+        if (year == 0 && monthOfYear == 1 && dayOfMonth == 0) {
+            display_textView.setText("テスト頑張ってね");
             dateText.setText(nowYear + "/" + nowMonth + "/" + nowDay);
         }
         //年を設定した時
@@ -226,7 +223,6 @@ public class DisplayActivity extends AppCompatActivity {
         setYotei();
 
 
-
         mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {
@@ -237,7 +233,7 @@ public class DisplayActivity extends AppCompatActivity {
                         .setMessage("課題が終わりましたか？")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                taskCardList.get(position).mColor=("#0000FF");
+                                taskCardList.get(position).mColor = ("#0000FF");
                                 mTaskAdapter.notifyDataSetChanged();
 
                                 String subject = taskCardList.get(position).subject;
@@ -251,17 +247,15 @@ public class DisplayActivity extends AppCompatActivity {
                                 for (YoteiDB i : items) {
                                     nowDate();
 
-                                    if(i.subject.equals(subject)&&i.naiyou.equals(naiyou)&&i.start_page.equals(start_page)&&i.finish_page.equals(finish_page)){
+                                    if (i.subject.equals(subject) && i.naiyou.equals(naiyou) && i.start_page.equals(start_page) && i.finish_page.equals(finish_page)) {
                                         i.end = "end";
                                         i.save();
-                                        Log.d("end",""+i.end);
+                                        Log.d("end", "" + i.end);
 
                                     }
 
 
-
                                 }
-
 
 
                             }
@@ -273,6 +267,39 @@ public class DisplayActivity extends AppCompatActivity {
 
             }
         });
+
+
+        mlistView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                //ここに処理を書く
+                String subject = taskCardList.get(position).subject;
+                String naiyou = taskCardList.get(position).naiyou;
+                String start_page = taskCardList.get(position).start_page;
+                String finish_page = taskCardList.get(position).finish_page;
+
+                //ここに処理を書く
+
+                List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
+                for (YoteiDB i : items) {
+                    nowDate();
+
+                    if (i.subject.equals(subject) && i.naiyou.equals(naiyou) && i.start_page.equals(start_page) && i.finish_page.equals(finish_page)) {
+                        taskCardList.remove(position);
+                        mTaskAdapter.notifyDataSetChanged();
+
+                        i.delete();
+                    }
+
+
+                }
+
+
+                return false;
+            }
+        });
+
+
     }
 
 
@@ -283,7 +310,7 @@ public class DisplayActivity extends AppCompatActivity {
     }
 
     public void setting(View v) {
-        Intent intent = new Intent(this, SetteiActivity.class);
+        Intent intent = new Intent(this, TestDateActivity.class);
         startActivity(intent);
     }
 
@@ -301,40 +328,46 @@ public class DisplayActivity extends AppCompatActivity {
         for (YoteiDB i : items) {
             nowDate();
 
-           // String nowDate = String.valueOf(nowYear) + "/" + String.valueOf(nowMonth) + "/" + String.valueOf(nowDay);
+            // String nowDate = String.valueOf(nowYear) + "/" + String.valueOf(nowMonth) + "/" + String.valueOf(nowDay);
             int naiyou_year = Integer.parseInt(i.date.substring(0, 4));
             int naiyou_month = Integer.parseInt(i.date.substring(5, 7));
             int naiyou_date = Integer.parseInt(i.date.substring(8, 10));
 
-//            Log.d("nowYear",""+nowYear);
-//            Log.d("nowMonth",""+nowMonth);
-//            Log.d("nowDay",""+nowDay);
-//
-//            Log.d("naiyou_year", "" + naiyou_year);
-//            Log.d("naiyou_month", "" + naiyou_month);
-//            Log.d("naiyou_date", "" + naiyou_date);
+            Log.d("nowYear", "" + nowYear);
+            Log.d("nowMonth", "" + nowMonth);
+            Log.d("nowDay", "" + nowDay);
 
-            if(naiyou_year < nowYear || naiyou_month < nowMonth || naiyou_date < nowDay) {
-                if(i.end.equals("end")){
-                    Log.d("if end",""+i.subject);
+            Log.d("naiyou_year", "" + naiyou_year);
+            Log.d("naiyou_month", "" + naiyou_month);
+            Log.d("naiyou_date", "" + naiyou_date);
+
+            if (naiyou_year < nowYear || naiyou_month < nowMonth || naiyou_date < nowDay) {
+                if (i.end.equals("end")) {
+                    Log.d("if end", "" + i.subject);
                     i.delete();
-                }else if (i.end.equals("nonend")){
-                    Log.d("if",""+i.subject);
+                } else if (i.end.equals("nonend")) {
+                    Log.d("if", "" + i.subject);
                     TaskCard mTaskCard;
-                    mTaskCard = new TaskCard(i.subject, i.naiyou, i.start_page, i.finish_page, "#FF0000");
+                    mTaskCard = new TaskCard(i.subject, i.naiyou, i.start_page, i.finish_page, "#FF0000", i.tag);
                     taskCardList.add(mTaskCard);
 
-                }else{
-                    Log.d("end else",""+i.subject);
+                } else {
+                    Log.d("end else", "" + i.subject);
                 }
-            } else if(naiyou_year==nowYear&&naiyou_month==nowMonth&&naiyou_date==nowDay&&i.end.equals("nonend")){
-                Log.d("else if",""+i.subject);
-                TaskCard mTaskCard;
-                mTaskCard = new TaskCard(i.subject, i.naiyou, i.start_page, i.finish_page, "#000000");
-                taskCardList.add(mTaskCard);
+            } else if (naiyou_year == nowYear && naiyou_month == nowMonth && naiyou_date == nowDay) {
+                if (i.end.equals("nonend")) {
+                    Log.d("else if", "" + i.subject);
+                    TaskCard mTaskCard;
+                    mTaskCard = new TaskCard(i.subject, i.naiyou, i.start_page, i.finish_page, "#000000", i.tag);
+                    taskCardList.add(mTaskCard);
 
-            }else{
-                Log.d("else",""+i.subject);
+                } else if (i.end.equals("end")) {
+                    TaskCard mTaskCard;
+                    mTaskCard = new TaskCard(i.subject, i.naiyou, i.start_page, i.finish_page, "#0000FF", i.tag);
+                    taskCardList.add(mTaskCard);
+
+
+                }
             }
 
 
@@ -342,6 +375,19 @@ public class DisplayActivity extends AppCompatActivity {
 
         mTaskAdapter = new TaskAdapter(this, R.layout.display_card, taskCardList);
         mlistView.setAdapter(mTaskAdapter);
+
+    }
+
+    public void enter(View v) {
+        Intent intent = new Intent(this, EnterActivity.class);
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
 
     }
 

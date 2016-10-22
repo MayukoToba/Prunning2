@@ -1,4 +1,4 @@
-package com.example.owner.prunning;
+package com.prunning.owner.prunning;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class EnterActivity extends AppCompatActivity {
+public class EnterActivity extends AppCompatActivity implements CheckBox.OnClickListener{
 
     private ArrayList<String> mPlanetTitles;
     private ListView mDrawerList;
@@ -36,6 +37,8 @@ public class EnterActivity extends AppCompatActivity {
     YoteiDB mYoteiDB;
 
     DatePickerDialog datePickerDialog;
+    String  tag = "";
+    CheckBox checkBox1,checkBox2,checkBox3,checkBox4,checkBox5,checkBox6;
 
 
     DatePickerDialog.OnDateSetListener DateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -136,6 +139,7 @@ public class EnterActivity extends AppCompatActivity {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        icon();
     }
 
     @Override
@@ -164,7 +168,7 @@ public class EnterActivity extends AppCompatActivity {
     }
 
     public void setting(View v) {
-        Intent intent = new Intent(this, SetteiActivity.class);
+        Intent intent = new Intent(this, TestDateActivity.class);
         startActivity(intent);
     }
 
@@ -212,9 +216,64 @@ public class EnterActivity extends AppCompatActivity {
             startActivity(intent);
 
 
+
         }
 
     }
+
+    void icon(){
+         checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
+         checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
+         checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
+         checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
+         checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
+         checkBox6 = (CheckBox) findViewById(R.id.checkBox6);
+        // チェックボックスのチェック状態を設定します
+        checkBox1.setChecked(true);
+        tag = "1";
+        // チェックボックスがクリックされた時に呼び出されるコールバックリスナーを登録します
+        checkBox1.setOnClickListener(this);
+        checkBox2.setOnClickListener(this);
+        checkBox3.setOnClickListener(this);
+        checkBox4.setOnClickListener(this);
+        checkBox5.setOnClickListener(this);
+        checkBox6.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v){
+
+        //処理
+        tag = (String) v.getTag();
+        Log.e("TAG",tag);
+
+
+        checkBox1.setChecked(false);
+        checkBox2.setChecked(false);
+        checkBox3.setChecked(false);
+        checkBox4.setChecked(false);
+        checkBox5.setChecked(false);
+        checkBox6.setChecked(false);
+        if(tag.equals("1")){
+            checkBox1.setChecked(true);
+        }else if(tag.equals("2")){
+            checkBox2.setChecked(true);
+        }else if(tag.equals("3")){
+            checkBox3.setChecked(true);
+        }else if(tag.equals("4")){
+            checkBox4.setChecked(true);
+        }else if(tag.equals("5")){
+            checkBox5.setChecked(true);
+        }else if(tag.equals("6")){
+            checkBox6.equals(true);
+        }
+
+
+
+    }
+
+
 
 
 
@@ -228,6 +287,8 @@ public class EnterActivity extends AppCompatActivity {
         Log.d("naiyou_year",""+date);
         Log.d("end",""+mYoteiDB.end);
         mYoteiDB.date =date;
+        mYoteiDB.tag = tag;
+        Log.d("tag",mYoteiDB.tag);
         mYoteiDB.save();
     }
 }

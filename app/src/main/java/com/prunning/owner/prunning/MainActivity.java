@@ -1,4 +1,4 @@
-package com.example.owner.prunning;
+package com.prunning.owner.prunning;
 
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,53 +15,44 @@ import com.activeandroid.query.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NaiyouListActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+
     private ArrayList<String> mPlanetTitles;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
 
-    ArrayList<NaiyouCard> mNaiyou;
-    NaiyouAdapter mNaiyouAdapter;
-    ListView NaiyouListView;
-
-    String naiyou_subject;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_naiyou_list);
+        setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        naiyou_subject =intent.getStringExtra("科目");
-        Log.d("kamoku",""+naiyou_subject);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPlanetTitles = new ArrayList<String>();
         mDrawerList = (ListView) findViewById(R.id.listView);
-        NaiyouListView = (ListView)findViewById(R.id.listView2);
 
         List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
         for (YoteiDB i : items) {
             String subject;
-            subject= i.subject;
-            if(!mPlanetTitles.contains(i.subject)){
+            subject = i.subject;
+            if (!mPlanetTitles.contains(i.subject)) {
                 mPlanetTitles.add(subject);
             }
 
         }
 
-        SubjectAdapter arrayAdapter= new SubjectAdapter (this, R.layout.card,mPlanetTitles);
+        SubjectAdapter arrayAdapter = new SubjectAdapter(this, R.layout.card, mPlanetTitles);
         mDrawerList.setAdapter(arrayAdapter);
 
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?>parent,View v,int position,long id){
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 String subject;
                 subject = mPlanetTitles.get(position);
-                Intent intent =new Intent (getApplicationContext(),NaiyouListActivity.class);
-                intent.putExtra("科目",subject);
+                Intent intent = new Intent(getApplicationContext(), NaiyouListActivity.class);
+                intent.putExtra("科目", subject);
                 startActivity(intent);
 
                 //mTaskAdapter.notifyDataSetChanged();
@@ -71,9 +61,7 @@ public class NaiyouListActivity extends AppCompatActivity {
         });
 
 
-
         // Set the adapter for the list view
-
 
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -92,26 +80,39 @@ public class NaiyouListActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
 
             }
+
+
+
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        setNaiyou();
+
 
     }
 
-   void setNaiyou() {
-       List<YoteiDB> items = new Select().from(YoteiDB.class).execute();
-       mNaiyou = new ArrayList<NaiyouCard>();
-       for (YoteiDB i : items) {
-           if (i.subject.equals(naiyou_subject)) {
-               NaiyouCard mNaiyouCard;
-               mNaiyouCard = new NaiyouCard(i.naiyou, i.start_page, i.finish_page);
-               mNaiyou.add(mNaiyouCard);
-           }
-       }
 
-       mNaiyouAdapter = new NaiyouAdapter(this, R.layout.naiyou_card, mNaiyou);
-       NaiyouListView.setAdapter(mNaiyouAdapter);
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
 
-   }
+    public void setting(View v) {
+        Intent intent = new Intent(this, SetteiActivity.class);
+        startActivity(intent);
+    }
+
+    public void nyuuryoku(View v) {
+        Intent intent = new Intent(this, EnterActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void hyouzi(View v) {
+        Intent intent = new Intent(this, DisplayActivity.class);
+        startActivity(intent);
+    }
+
+
 }
+
