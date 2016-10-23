@@ -51,11 +51,13 @@ public class TaskAdapter extends ArrayAdapter<TaskCard> {
             //set data
             viewHolder.subjectTextView.setText(item.subject);
             viewHolder.subjectTextView.setTextColor(Color.parseColor(item.mColor));
+
+
             viewHolder.naiyouTextView.setText(item.naiyou);
             viewHolder.naiyouTextView.setTextColor(Color.parseColor(item.mColor));
-            viewHolder.startpageTextView.setText(item.start_page);
+            viewHolder.startpageTextView.setText("(P."+item.start_page+"~");
             viewHolder.startpageTextView.setTextColor(Color.parseColor(item.mColor));
-            viewHolder.finishpageTextView.setText(item.finish_page);
+            viewHolder.finishpageTextView.setText("P."+item.finish_page+")");
             viewHolder.finishpageTextView.setTextColor(Color.parseColor(item.mColor));
 
 
